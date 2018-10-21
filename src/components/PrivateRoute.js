@@ -8,11 +8,12 @@ import styles from '../styles'
 
 const PrivateRoute = class extends Component {
   state = { user: null }
+
   render () {
     const { user } = this.state
     const { component: Component, classes, ...rest } = this.props
 
-    return <Route {...rest} render={props => user ? <Component {...props} /> : null} />
+    return <Route {...rest} render={props => user ? <Component {...props} user={user} /> : null} />
   }
 
   componentDidMount () {

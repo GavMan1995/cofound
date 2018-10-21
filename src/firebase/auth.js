@@ -1,21 +1,21 @@
 import { auth } from './config'
 
 // Sign Up
-export const doCreateUserWithEmailAndPassword = (email, password) =>
+export const createUser = (email, password) =>
   auth.createUserWithEmailAndPassword(email, password)
 
 // Sign In
-export const doSignInWithEmailAndPassword = (email, password) =>
+export const signIn = (email, password) =>
   auth.signInWithEmailAndPassword(email, password)
 
 // Sign out
-export const doSignOut = () =>
+export const signOut = () =>
   auth.signOut()
 
 // Password Reset
-export const doPasswordReset = email =>
+export const passwordReset = email =>
   auth.sendPasswordResetEmail(email)
 
 // Password Change
-export const doPasswordUpdate = password =>
+export const passwordUpdate = password =>
   auth.currentUser.updatePassword(password)
