@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
 import indexRoutes from './routes'
-import Login from './pages/Login'
+import SignIn from './pages/SignIn'
 import PrivateRoute from './components/PrivateRoute'
 import theme from './styles/theme'
 import store from './store'
@@ -18,7 +18,7 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <Router history={history}>
         <Switch>
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/signin' component={SignIn} />
 
           {indexRoutes.map((route, key) =>
             <PrivateRoute

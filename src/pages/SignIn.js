@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Card, CardContent, Typography, TextField, Button } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 
 import history from '../helpers/history'
 import { auth } from '../firebase'
@@ -18,7 +19,7 @@ export default withStyles(styles)(class extends Component {
     const { form } = this.state
 
     return (
-      <Grid container className={classes.marginTop4} justify='center' alignItems='center'>
+      <Grid container className={classNames(classes.fullHeight, classes.gradientBG)} justify='center' alignItems='center'>
         <Card>
           <CardContent>
             <Typography align='center' className={classes.marginBottom2} variant='title'>

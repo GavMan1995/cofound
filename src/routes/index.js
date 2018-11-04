@@ -1,7 +1,7 @@
 import Home from '../pages/Home'
-import Part1 from '../pages/SignUp/Part1'
+import SignUp from '../pages/SignUp'
 
 export default [
   { path: '/', name: 'Home', component: Home },
-  { path: '/signup/part1', name: 'SignUpPart1', component: Part1 }
+  { path: '/signup', name: 'SignUp', component: SignUp }
 ]

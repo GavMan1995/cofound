@@ -6,17 +6,11 @@ export default createMuiTheme({
   palette: {
     primary: {
       main: colors.primaryMain,
-      contrastText: '#fff'
+      contrastText: colors.paper
     },
+
     secondary: {
-      main: colors.secondaryMain,
-      light: colors.secondaryLight,
-      light1: colors.secondaryLight1,
-      light2: colors.secondaryLight2,
-      dark: colors.secondaryDark,
-      dark1: colors.secondaryDark1,
-      dark2: colors.secondaryDark2,
-      dark3: colors.secondaryDark3
+      main: colors.secondaryMain
     },
 
     red: {
@@ -27,6 +21,23 @@ export default createMuiTheme({
     green: {
       main: colors.green,
       dark: colors.greenDark
+    },
+
+    yellow: {
+      main: colors.yellow,
+      dark: colors.yellowDark
+    }
+  },
+
+  shape: {
+    borderRadius: 8
+  },
+
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: 25
+      }
     }
   }
 })

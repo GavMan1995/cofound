@@ -1,25 +1,15 @@
 // === This will contain both the JSS and the Styled Components with a global context ===\\
 // === Using styled components because you cant ...spread two JSS files together and still have theme available === \\
-import styled from 'styled-components'
-import { Button } from '@material-ui/core'
-import colors from '../variables/colors'
-
 export default theme => ({
   // Page Wrapper
   pageWrapper: {
-    marginLeft: 50,
-    padding: theme.spacing.unit * 3,
-    transition: 'margin 0.2s',
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0,
-      padding: theme.spacing.unit
-    }
-  },
+    marginLeft: 'calc(50% - 450px)',
+    marginRight: 'calc(50% - 450px)',
+    marginBottom: theme.spacing.unit * 4,
 
-  pageWrapperOpen: {
-    marginLeft: 220,
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0
+    [theme.breakpoints.down(940)]: {
+      marginLeft: 20,
+      marginRight: 20
     }
   },
 
@@ -498,16 +488,12 @@ export default theme => ({
     overflow: 'hidden'
   },
 
-  darkBG: {
-    backgroundColor: colors.secondaryDark3
+  gradientBG: {
+    background: 'linear-gradient(to right top, #5c258d, #4389a2)'
   },
 
   whiteBG: {
     backgroundColor: '#fff'
-  },
-
-  grayBG: {
-    backgroundColor: theme.palette.secondary.light
   },
 
   // Cards
@@ -589,31 +575,3 @@ export default theme => ({
     transition: 'height 0.2s'
   }
 })
-
-export const RedButton = styled(Button)`
-  &&{
-    color: #fff;
-    background-color: ${colors.red};
-    &:hover {
-      background-color: ${colors.redDark};
-    }
-  }
-`
-
-export const GreenButton = styled(Button)`
-  &&{
-    color: #fff;
-    background-color: ${colors.green};
-    &:hover {
-      background-color: ${colors.greenDark};
-    }
-  }
-`
-
-export const FlexVerticalCenter = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center;
-`
