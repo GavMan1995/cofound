@@ -31,7 +31,8 @@
     "react-treebeard": "^2.1.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^3.4.9"
+    "styled-components": "^3.4.9",
+    "uploadcare-widget": "^3.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

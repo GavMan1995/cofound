@@ -13,16 +13,16 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { KeyboardArrowRight } from '@material-ui/icons'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+import Dropzone from 'react-dropzone'
+import classNames from 'classnames'
 
 import history from '../../helpers/history'
-import { db } from '../../firebase'
-import { formats, modules } from '../../helpers/reactQuill'
+import { db, storage } from '../../firebase'
 import styles from '../../styles'
 
 export default withStyles(styles)(class extends Component {
   state = {
+    profileImg: null,
     skillIdeaDesc: '',
     role: 'skills',
     userName: '',
@@ -32,12 +32,12 @@ export default withStyles(styles)(class extends Component {
     keywords: [],
     attribute: '',
     attributes: [],
-    form: 1
+    form: 0
   }
 
   render () {
     const { classes } = this.props
-    const { skillIdeaDesc, role, userName, fullName, aboutMe, keywords, keyword, attribute, attributes, form } = this.state
+    const { skillIdeaDesc, role, userName, fullName, aboutMe, keywords, keyword, attribute, attributes, form, profileImg } = this.state
 
     return (
       <Card>
@@ -47,10 +47,18 @@ export default withStyles(styles)(class extends Component {
               <Grid container alignItems='center' spacing={24}>
                 <Grid item className={classes.positionRelative} xs={12} md={3}>
                   <Typography align='center'>Add Profile Image</Typography>
-                  <div className={classes.padding2}>
-                    <img className={classes.fullWidth} src='https://cdn3.iconfinder.com/data/icons/basic-ui-6/40/Asset_12-512.png' alt='' />
-                  </div>
-                  <input className={classes.profileImageButton} type='hidden' role='uploadcare-uploader' name='profileImage' data-crop='600:600' data-images-only='true' />
+                  <Dropzone
+                    className={classNames(classes.fullWidth, classes.fullHeight, classes.cursorPointer)}
+                    accept='image/jpeg, image/png'
+                    onDrop={this.onDrop}>
+
+                    <div className={classes.padding2}>
+                      {profileImg
+                        ? <img className={classes.fullWidth} src={profileImg} alt='' />
+                        : <img className={classes.fullWidth} src='https://cdn3.iconfinder.com/data/icons/basic-ui-6/40/Asset_12-512.png' alt='' />
+                      }
+                    </div>
+                  </Dropzone>
                 </Grid>
 
                 <Grid item xs={12} md={9}>
@@ -119,14 +127,18 @@ export default withStyles(styles)(class extends Component {
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant='title'>Add the description for your {role} here</Typography>
-                <ReactQuill
-                  modules={modules}
-                  formats={formats}
-                  className={classes.reactQuill}
-                  theme='snow'
+                <Typography className={classes.marginBottom1} variant='title'>
+                  Add the description for your {role} here
+                </Typography>
+
+                <TextField
+                  multiline
+                  rows={6}
+                  placeholder='Great Idea/Skills'
+                  className={classes.fullWidth}
+                  variant='outlined'
                   value={skillIdeaDesc}
-                  onChange={event => this.handleInputChange('skillIdeaDesc')} />
+                  onChange={this.handleInputChange('skillIdeaDesc')} />
               </Grid>
 
               <Grid item xs={12} container justify='center'>
@@ -141,6 +153,7 @@ export default withStyles(styles)(class extends Component {
 
   submitDetailsForm = () => {
     const userID = this.props.user.uid
+    const skillIdeaDesc = this.state.skillIdeaDesc
 
     if (this.state.role === 'skills') {
       db.addUserToSkillUsers(userID)
@@ -156,7 +169,7 @@ export default withStyles(styles)(class extends Component {
       db.addUserToKeywords(word, userID)
     })
 
-    db.addSkillIdeaDescription(userID, this.state.skillIdeaDesc)
+    db.addSkillIdeaDescription(userID, skillIdeaDesc)
 
     history.push('/')
   }
@@ -176,10 +189,6 @@ export default withStyles(styles)(class extends Component {
         .then(res => this.setState({ form: 1 }))
         .catch(err => window.alert('Error' + err))
     }
-  }
-
-  submiteDetailsForm = () => {
-
   }
 
   onDrop = acceptedFiles => {
@@ -228,7 +237,20 @@ export default withStyles(styles)(class extends Component {
     this.setState({ keywords: [...this.state.keywords, word], keyword: '' })
   }
 
+  handleQuillChange = (value) => {
+    this.setState({ skillIdeaDesc: value })
+  }
+
   handleInputChange = name => event => {
     this.setState({ [name]: event.target.value })
+  }
+
+  onDrop = acceptedFile => {
+    console.log(acceptedFile[0].preview)
+    storage.uploadImage(acceptedFile[0].preview)
+      .then(snapshot => console.log(snapshot))
+      .catch(err => console.log(err))
+
+    this.setState({ profileImg: acceptedFile[0].preview })
   }
 })
