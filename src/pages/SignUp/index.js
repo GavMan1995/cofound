@@ -32,7 +32,7 @@ export default withStyles(styles)(class extends Component {
     keywords: [],
     attribute: '',
     attributes: [],
-    form: 0
+    form: 1
   }
 
   render () {
@@ -198,10 +198,11 @@ export default withStyles(styles)(class extends Component {
     const attributes = []
 
     db.getAttributes()
-      .then(querySnapshot => querySnapshot.docs.map(doc => attributes.push(doc.id)))
+      .then(querySnapshot => {
+        querySnapshot.docs.map(doc => attributes.push(doc.id))
+        if (!attributes.includes(att)) db.addAttribute(att)
+      })
       .catch(error => window.alert(error))
-
-    if (!attributes.includes(att)) db.addAttribute(att)
 
     this.setState({ attributes: [...this.state.attributes, att], attribute: '' })
   }
@@ -218,10 +219,11 @@ export default withStyles(styles)(class extends Component {
     const words = []
 
     db.getKeywords()
-      .then(querySnapshot => querySnapshot.docs.map(doc => words.push(doc.id)))
+      .then(querySnapshot => {
+        querySnapshot.docs.map(doc => words.push(doc.id))
+        if (!words.includes(word)) db.addKeyword(word)
+      })
       .catch(error => window.alert(error))
-
-    if (!words.includes(word)) db.addKeyword(word)
 
     this.setState({ keywords: [...this.state.keywords, word], keyword: '' })
   }
