@@ -70,7 +70,7 @@ export default withStyles(styles)(class extends Component {
     console.log(state)
 
     auth.createUser(state.email, state.password)
-      .then(res => history.push('/signup/part1'))
+      .then(res => history.push('/signup'))
       .catch(err => console.log(err))
   }
 

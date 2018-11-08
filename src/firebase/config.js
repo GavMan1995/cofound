@@ -1,4 +1,5 @@
 import * as firebase from 'firebase'
+import 'firebase/firestore'
 
 const prodConfig = {
   apiKey: 'AIzaSyC3ZmtC3sw7tfvoTnDQ77MD5GzrY3K0gb4',
@@ -26,8 +27,11 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }
 
-const db = firebase.database()
+const db = firebase.firestore()
 const auth = firebase.auth()
+
+const settings = { timestampsInSnapshots: true }
+db.settings(settings)
 
 export {
   db,

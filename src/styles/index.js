@@ -13,6 +13,10 @@ export default theme => ({
     }
   },
 
+  positionRelative: {
+    position: 'relative'
+  },
+
   scrollY: {
     overflowY: 'scroll'
   },
