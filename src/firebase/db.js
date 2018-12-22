@@ -12,24 +12,16 @@ export const updateUser = (id, username, firstname, lastname, aboutme) =>
   })
 
 export const addUserToIdeaUsers = id =>
-  db.collection('users').doc('ideaUsers').update({
-    users: firebase.firestore.FieldValue.arrayUnion(id)
-  })
+  db.collection('ideaUsers').doc(id).set({})
 
 export const addUserToSkillUsers = id =>
-  db.collection('users').doc('skillUsers').update({
-    users: firebase.firestore.FieldValue.arrayUnion(id)
-  })
+  db.collection('skillUsers').doc(id).set({})
 
 export const addUserToAttributes = (attribute, id) =>
-  db.collection('attributes').doc(attribute).update({
-    users: firebase.firestore.FieldValue.arrayUnion(id)
-  })
+  db.collection('attributes').doc(attribute).collection('users').doc(id).set({})
 
 export const addUserToKeywords = (keyword, id) =>
-  db.collection('keywords').doc(keyword).update({
-    users: firebase.firestore.FieldValue.arrayUnion(id)
-  })
+  db.collection('keywords').doc(keyword).collection('users').doc(id).set({})
 
 export const addSkillIdeaDescription = (id, desc) =>
   db.collection('users').doc(id).update({
@@ -38,14 +30,10 @@ export const addSkillIdeaDescription = (id, desc) =>
 
 // Other API
 export const addAttribute = att =>
-  db.collection('attributes').doc(att).set({
-    users: []
-  })
+  db.collection('attributes').doc(att).set({})
 
 export const addKeyword = word =>
-  db.collection('keywords').doc(word).set({
-    users: []
-  })
+  db.collection('keywords').doc(word).set({})
 
 export const getAttributes = () =>
   db.collection('attributes').get()
